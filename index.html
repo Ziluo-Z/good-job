@@ -546,6 +546,8 @@
             draggableOptions.forEach(item => {
                 item.addEventListener('dragstart', handleDragStart);
                 item.addEventListener('dragend', handleDragEnd);
+                // 添加点击事件监听器
+                item.addEventListener('click', handleClick);
             });
             
             // 为答案框添加事件监听器
@@ -701,6 +703,26 @@
                 updatePreview();
             }
             
+            // 点击可选模块
+            function handleClick() {
+                if (answerPlaceholder && answerBox.contains(answerPlaceholder)) {
+                    answerPlaceholder.remove();
+                }
+                
+                const data = this.getAttribute('data-value');
+                const newItem = document.createElement('div');
+                newItem.className = 'draggable-item';
+                newItem.draggable = true;
+                newItem.setAttribute('data-value', data);
+                newItem.textContent = data;
+                
+                newItem.addEventListener('dragstart', handleDragStart);
+                newItem.addEventListener('dragend', handleDragEnd);
+                
+                answerBox.appendChild(newItem);
+                updatePreview();
+            }
+            
             // 重置答案框
             function resetAnswerBox() {
                 // 清空答案框
@@ -729,449 +751,14 @@
             
             // 使答案框中的元素可排序
             answerBox.addEventListener('click', function(e) {
-                if (e.target.classList.contains('draggable-item')) {
-                    makeSortable();
-                }
+                // 这里可以添加元素排序的逻辑
             });
-            
-            function makeSortable() {
-                // 使用简单的排序实现
-                const sortableItems = answerBox.querySelectorAll('.draggable-item');
-                let dragged = null;
-                
-                sortableItems.forEach(item => {
-                    item.addEventListener('dragstart', function() {
-                        dragged = this;
-                        setTimeout(() => {
-                            this.classList.add('hidden');
-                        }, 0);
-                    });
-                    
-                    item.addEventListener('dragend', function() {
-                        dragged = null;
-                        sortableItems.forEach(item => {
-                            item.classList.remove('hidden', 'bg-blue-100');
-                        });
-                        updatePreview();
-                    });
-                    
-                    item.addEventListener('dragover', function(e) {
-                        e.preventDefault();
-                    });
-                    
-                    item.addEventListener('dragenter', function(e) {
-                        e.preventDefault();
-                        if (this !== dragged) {
-                            this.classList.add('bg-blue-100');
-                        }
-                    });
-                    
-                    item.addEventListener('dragleave', function() {
-                        this.classList.remove('bg-blue-100');
-                    });
-                    
-                    item.addEventListener('drop', function(e) {
-                        e.preventDefault();
-                        this.classList.remove('bg-blue-100');
-                        
-                        if (this !== dragged && answerBox.contains(dragged)) {
-                            if (getDragAfterElement(this, e.clientY)) {
-                                answerBox.insertBefore(dragged, getDragAfterElement(this, e.clientY));
-                            } else {
-                                answerBox.appendChild(dragged);
-                            }
-                        }
-                    });
-                });
-                
-                function getDragAfterElement(container, y) {
-                    const draggableElements = [...container.parentNode.querySelectorAll('.draggable-item:not(.hidden)')];
-                    
-                    return draggableElements.reduce((closest, child) => {
-                        const box = child.getBoundingClientRect();
-                        const offset = y - box.top - box.height / 2;
-                        
-                        if (offset < 0 && offset > closest.offset) {
-                            return { offset: offset, element: child };
-                        } else {
-                            return closest;
-                        }
-                    }, { offset: Number.NEGATIVE_INFINITY }).element;
-                }
-            }
             
             // 更新预览
             function updatePreview() {
-                const items = answerBox.querySelectorAll('.draggable-item');
-                const code = Array.from(items).map(item => item.getAttribute('data-value')).join(' ');
-                
-                // 更新代码预览
-                codePreview.innerHTML = code || '<span class="text-gray-400">&lt;这里将显示你的代码&gt;</span>';
+                const items = Array.from(answerBox.children).map(item => item.getAttribute('data-value'));
+                codePreview.textContent = items.join(' ');
             }
-            
-            // 添加动画效果
-            const animateElements = document.querySelectorAll('.bg-white.rounded-xl');
-            animateElements.forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(10px)';
-                el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, 80 * (index + 1));
-            });
-        });
-
-        // 第10题脚本
-        // 联动选择器 - form标签和结束标签联动
-        document.getElementById('blank1').addEventListener('change', function() {
-            document.getElementById('blank1_close').value = this.value;
-        });
-
-        document.getElementById('blank1_close').addEventListener('change', function() {
-            document.getElementById('blank1').value = this.value;
-        });
-        
-        // 联动选择器 - input标签联动
-        document.getElementById('blank3_1').addEventListener('change', function() {
-            document.getElementById('blank3_2').value = this.value;
-            document.getElementById('blank3_3').value = this.value;
-            document.getElementById('blank3_4').value = this.value;
-            document.getElementById('blank3_5').value = this.value;
-        });
-        
-        document.getElementById('blank3_2').addEventListener('change', function() {
-            document.getElementById('blank3_1').value = this.value;
-            document.getElementById('blank3_3').value = this.value;
-            document.getElementById('blank3_4').value = this.value;
-            document.getElementById('blank3_5').value = this.value;
-        });
-
-        document.getElementById('blank3_3').addEventListener('change', function() {
-            document.getElementById('blank3_1').value = this.value;
-            document.getElementById('blank3_2').value = this.value;
-            document.getElementById('blank3_4').value = this.value;
-            document.getElementById('blank3_5').value = this.value;
-        });
-
-        document.getElementById('blank3_4').addEventListener('change', function() {
-            document.getElementById('blank3_1').value = this.value;
-            document.getElementById('blank3_2').value = this.value;
-            document.getElementById('blank3_3').value = this.value;
-            document.getElementById('blank3_5').value = this.value;
-        });
-
-        document.getElementById('blank3_5').addEventListener('change', function() {
-            document.getElementById('blank3_1').value = this.value;
-            document.getElementById('blank3_2').value = this.value;
-            document.getElementById('blank3_3').value = this.value;
-            document.getElementById('blank3_4').value = this.value;
-        });
-
-        // 联动选择器 - radio类型
-        document.getElementById('blank3_2_type').addEventListener('change', function() {
-            document.getElementById('blank3_3_type').value = this.value;
-            document.getElementById('blank3_4_type').value = this.value;
-        });
-
-        document.getElementById('blank3_3_type').addEventListener('change', function() {
-            document.getElementById('blank3_2_type').value = this.value;
-            document.getElementById('blank3_4_type').value = this.value;
-        });
-        
-        document.getElementById('blank3_4_type').addEventListener('change', function() {
-            document.getElementById('blank3_2_type').value = this.value;
-            document.getElementById('blank3_3_type').value = this.value;
-        });
-
-        // h2标签联动
-        document.getElementById('blank2').addEventListener('change', function() {
-            document.getElementById('blank2_close').value = this.value;
-        });
-        
-        document.getElementById('blank2_close').addEventListener('change', function() {
-            document.getElementById('blank2').value = this.value;
-        });
-        
-        // 重置按钮
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            const selects = document.querySelectorAll('select');
-            selects.forEach(select => {
-                select.value = '';
-            });
-            
-            document.getElementById('feedback').classList.add('hidden');
-            document.getElementById('preview-content').innerHTML = `
-                <div class="text-center text-gray-500 py-12">
-                    <i class="fa fa-code text-3xl mb-2"></i>
-                    <p>请完成上方的代码填空，然后点击"提交答案"按钮查看预览效果</p>
-                </div>
-            `;
-        });
-        
-        // 提交按钮
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            // 显示加载动画
-            document.getElementById('loading').classList.remove('hidden');
-            
-            // 模拟加载延迟
-            setTimeout(function() {
-                // 隐藏加载动画
-                document.getElementById('loading').classList.add('hidden');
-                
-                // 获取所有选择器的值
-                const blank1 = document.getElementById('blank1').value;
-                const blank_action = document.getElementById('blank_action').value;
-                const blank_method = document.getElementById('blank_method').value;
-                const blank2 = document.getElementById('blank2').value;
-                const blank3_1 = document.getElementById('blank3_1').value;
-                const blank3_1_type = document.getElementById('blank3_1_type').value;
-                const blank3_2 = document.getElementById('blank3_2').value;
-                const blank3_2_type = document.getElementById('blank3_2_type').value;
-                const blank3_2_name = document.getElementById('blank3_2_name').value;
-                const blank3_2_value = document.getElementById('blank3_2_value').value;
-                const blank3_3 = document.getElementById('blank3_3').value;
-                const blank3_3_type = document.getElementById('blank3_3_type').value;
-                const blank3_3_name = document.getElementById('blank3_3_name').value;
-                const blank3_3_value = document.getElementById('blank3_3_value').value;
-                const blank3_4 = document.getElementById('blank3_4').value;
-                const blank3_4_type = document.getElementById('blank3_4_type').value;
-                const blank3_4_name = document.getElementById('blank3_4_name').value;
-                const blank3_4_value = document.getElementById('blank3_4_value').value;
-                const blank3_5 = document.getElementById('blank3_5').value;
-                const blank3_5_type = document.getElementById('blank3_5_type').value;
-                const blank4 = document.getElementById('blank4').value;
-                
-                // 检查答案正确性
-                let correctCount = 0;
-                const totalCount = 21; // 总填空数
-                
-                // 验证每个空
-                if (blank1 === 'form') correctCount++;
-                if (blank_action === 'jydj.html') correctCount++;
-                if (blank_method === 'POST') correctCount++;
-                if (blank2 === 'h2') correctCount++;
-                if (blank3_1 === 'input') correctCount++;
-                if (blank3_1_type === 'text') correctCount++;
-                if (blank3_2 === 'input') correctCount++;
-                if (blank3_2_type === 'radio') correctCount++;
-                if (blank3_2_name === '年级') correctCount++;
-                if (blank3_2_value === '七年级') correctCount++;
-                if (blank3_3 === 'input') correctCount++;
-                if (blank3_3_type === 'radio') correctCount++;
-                if (blank3_3_name === '年级') correctCount++;
-                if (blank3_3_value === '八年级') correctCount++;
-                if (blank3_4 === 'input') correctCount++;
-                if (blank3_4_type === 'radio') correctCount++;
-                if (blank3_4_name === '年级') correctCount++;
-                if (blank3_4_value === '九年级') correctCount++;
-                if (blank3_5 === 'input') correctCount++;
-                if (blank3_5_type === 'submit') correctCount++;
-                if (blank4 === 'value') correctCount++;
-                
-                // 创建预览内容
-                const previewContent = document.createElement('div');
-                
-                try {
-                    // 创建表单元素
-                    const form = document.createElement(blank1 || 'div'); // 默认使用div
-                    form.action = blank_action || '';
-                    form.method = blank_method || '';
-                    form.className = 'space-y-3';
-                    
-                    // 添加标题
-                    const title = document.createElement(blank2 || 'div');
-                    title.textContent = '图书借阅登记表';
-                    title.className = 'text-lg font-bold mb-3';
-                    form.appendChild(title);
-                    
-                    // 添加图书名称输入
-                    const bookName = document.createElement(blank3_1 || 'div');
-                    bookName.type = blank3_1_type || '';
-                    bookName.name = '图书名称'; // 固定为"图书名称"
-                    bookName.placeholder = '请输入图书名称';
-                    bookName.className = 'w-full px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm';
-                    
-                    const bookNameContainer = document.createElement('div');
-                    bookNameContainer.className = 'mb-3';
-                    bookNameContainer.innerHTML = '<label class="block text-gray-700 mb-1.5 text-sm">借阅的图书名称是：</label>';
-                    bookNameContainer.appendChild(bookName);
-                    form.appendChild(bookNameContainer);
-                    
-                    // 添加年级选择
-                    const gradeContainer = document.createElement('div');
-                    gradeContainer.className = 'mb-3';
-                    gradeContainer.innerHTML = '<label class="block text-gray-700 mb-1.5 text-sm">你的年级是：</label>';
-                    
-                    // 七年级
-                    const grade7Container = document.createElement('div');
-                    grade7Container.className = 'flex items-center mb-1.5';
-                    const grade7 = document.createElement(blank3_2 || 'div');
-                    grade7.type = blank3_2_type || '';
-                    grade7.name = blank3_2_name || '';
-                    grade7.value = blank3_2_value || '';
-                    grade7.id = 'grade7';
-                    grade7.className = 'mr-1.5';
-                    const grade7Label = document.createElement('label');
-                    grade7Label.htmlFor = 'grade7';
-                    grade7Label.textContent = '七年级';
-                    grade7Label.className = 'text-sm';
-                    grade7Container.appendChild(grade7);
-                    grade7Container.appendChild(grade7Label);
-                    gradeContainer.appendChild(grade7Container);
-                    
-                    // 八年级
-                    const grade8Container = document.createElement('div');
-                    grade8Container.className = 'flex items-center mb-1.5';
-                    const grade8 = document.createElement(blank3_3 || 'div');
-                    grade8.type = blank3_3_type || '';
-                    grade8.name = blank3_3_name || '';
-                    grade8.value = blank3_3_value || '';
-                    grade8.id = 'grade8';
-                    grade8.className = 'mr-1.5';
-                    const grade8Label = document.createElement('label');
-                    grade8Label.htmlFor = 'grade8';
-                    grade8Label.textContent = '八年级';
-                    grade8Label.className = 'text-sm';
-                    grade8Container.appendChild(grade8);
-                    grade8Container.appendChild(grade8Label);
-                    gradeContainer.appendChild(grade8Container);
-                    
-                    // 九年级
-                    const grade9Container = document.createElement('div');
-                    grade9Container.className = 'flex items-center';
-                    const grade9 = document.createElement(blank3_4 || 'div');
-                    grade9.type = blank3_4_type || '';
-                    grade9.name = blank3_4_name || '';
-                    grade9.value = blank3_4_value || '';
-                    grade9.id = 'grade9';
-                    grade9.className = 'mr-1.5';
-                    const grade9Label = document.createElement('label');
-                    grade9Label.htmlFor = 'grade9';
-                    grade9Label.textContent = '九年级';
-                    grade9Label.className = 'text-sm';
-                    grade9Container.appendChild(grade9);
-                    grade9Container.appendChild(grade9Label);
-                    gradeContainer.appendChild(grade9Container);
-                    
-                    form.appendChild(gradeContainer);
-                    
-                    // 添加提交按钮
-                    const submitBtn = document.createElement(blank3_5 || 'div');
-                    submitBtn.type = blank3_5_type || '';
-                    submitBtn[blank4 || 'textContent'] = '提交借阅申请';
-                    submitBtn.className = 'w-full bg-primary hover:bg-primary/90 text-white font-medium py-1.5 px-3 rounded-lg transition-all duration-300 text-sm';
-                    form.appendChild(submitBtn);
-                    
-                    // 清空预览内容并添加表单
-                    previewContent.innerHTML = '';
-                    previewContent.appendChild(form);
-                    
-                    const isAllCorrect = correctCount === totalCount;
-                    
-                    // 显示反馈
-                    if (isAllCorrect) {
-                        document.getElementById('feedback').innerHTML = `
-                            <i class="fa fa-check-circle mr-1"></i>恭喜你，所有答案都正确！
-                        `;
-                        document.getElementById('feedback').className = 'mt-3 p-2 rounded-lg bg-green-100 text-green-700 text-sm';
-                        document.getElementById('feedback').classList.remove('hidden');
-                        
-                        // 添加成功动画
-                        document.getElementById('preview-content').classList.add('animate-bounce');
-                        setTimeout(() => {
-                            document.getElementById('preview-content').classList.remove('animate-bounce');
-                        }, 1000);
-                    } else {
-                        document.getElementById('feedback').innerHTML = `
-                            <i class="fa fa-times-circle mr-1"></i>答案有误，你答对了 ${correctCount} 个空，共 ${totalCount} 个空
-                        `;
-                        document.getElementById('feedback').className = 'mt-3 p-2 rounded-lg bg-red-100 text-red-700 text-sm';
-                        document.getElementById('feedback').classList.remove('hidden');
-                    }
-                } catch (error) {
-                    document.getElementById('feedback').innerHTML = `
-                        <i class="fa fa-exclamation-circle mr-1"></i>预览生成失败: ${error.message}
-                    `;
-                    document.getElementById('feedback').className = 'mt-3 p-2 rounded-lg bg-red-100 text-red-700 text-sm';
-                    document.getElementById('feedback').classList.remove('hidden');
-                    
-                    previewContent.innerHTML = `
-                        <div class="text-center text-red-500 py-12">
-                            <i class="fa fa-exclamation-triangle text-3xl mb-2"></i>
-                            <p>预览生成失败，请检查你的代码</p>
-                            <p class="text-xs mt-1.5">错误信息: ${error.message}</p>
-                        </div>
-                    `;
-                }
-                
-                // 更新预览内容
-                document.getElementById('preview-content').innerHTML = '';
-                document.getElementById('preview-content').appendChild(previewContent);
-                
-                // 添加淡入动画
-                document.getElementById('preview-content').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('preview-content').style.opacity = '1';
-                    document.getElementById('preview-content').style.transition = 'opacity 0.5s ease-in-out';
-                }, 100);
-                
-            }, 600); // 600ms的加载延迟
-        });
-
-        // 另存为功能
-        document.getElementById('save-btn').addEventListener('click', function() {
-            const fileNumber = document.getElementById('file-number').value;
-            const fileName = fileNumber ? `${fileNumber}.html` : 'answers.html';
-
-            // 获取第9题答案
-            const codePreview = document.getElementById('code-preview');
-            const ninthAnswer = codePreview.textContent;
-
-            // 获取第10题答案
-            const blank1 = document.getElementById('blank1').value;
-            const blank_action = document.getElementById('blank_action').value;
-            const blank_method = document.getElementById('blank_method').value;
-            const blank2 = document.getElementById('blank2').value;
-            const blank3_1 = document.getElementById('blank3_1').value;
-            const blank3_1_type = document.getElementById('blank3_1_type').value;
-            const blank3_2 = document.getElementById('blank3_2').value;
-            const blank3_2_type = document.getElementById('blank3_2_type').value;
-            const blank3_2_name = document.getElementById('blank3_2_name').value;
-            const blank3_2_value = document.getElementById('blank3_2_value').value;
-            const blank3_3 = document.getElementById('blank3_3').value;
-            const blank3_3_type = document.getElementById('blank3_3_type').value;
-            const blank3_3_name = document.getElementById('blank3_3_name').value;
-            const blank3_3_value = document.getElementById('blank3_3_value').value;
-            const blank3_4 = document.getElementById('blank3_4').value;
-            const blank3_4_type = document.getElementById('blank3_4_type').value;
-            const blank3_4_name = document.getElementById('blank3_4_name').value;
-            const blank3_4_value = document.getElementById('blank3_4_value').value;
-            const blank3_5 = document.getElementById('blank3_5').value;
-            const blank3_5_type = document.getElementById('blank3_5_type').value;
-            const blank4 = document.getElementById('blank4').value;
-
-            // 构建第10题的代码
-            let tenthAnswer = `<${blank1} action="${blank_action}" method="${blank_method}">\n`;
-            tenthAnswer += `\t<${blank2}>图书借阅登记表</${blank2}>\n`;
-            tenthAnswer += `\t借阅的图书名称是：\n`;
-            tenthAnswer += `\t<${blank3_1} type="${blank3_1_type}" name="图书名称">\n`;
-            tenthAnswer += `\t你的年级是：\n`;
-            tenthAnswer += `\t<${blank3_1} type="${blank3_2_type}" name="${blank3_2_name}" value="${blank3_2_value}">七年级\n`;
-            tenthAnswer += `\t<${blank3_1} type="${blank3_3_type}" name="${blank3_3_name}" value="${blank3_3_value}">八年级\n`;
-            tenthAnswer += `\t<${blank3_1} type="${blank3_4_type}" name="${blank3_4_name}" value="${blank3_4_value}">九年级\n`;
-            tenthAnswer += `\t<${blank3_1} type="${blank3_5_type}" ${blank4}="提交借阅申请">\n`;
-            tenthAnswer += `</${blank1}>`;
-
-            const content = `第9题答案:\n${ninthAnswer}\n\n第10题答案:\n${tenthAnswer}`;
-
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = fileName;
-            link.click();
-            URL.revokeObjectURL(link.href);
         });
     </script>
 </body>
