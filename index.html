@@ -1,17 +1,1178 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试题</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        neutral: '#F3F4F6',
+                        dark: '#1F2937'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                        consolas: ['Consolas', 'Monaco', 'monospace'],
+                    },
+                    screens: {
+                        'ultrawide': '1920px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+
+            .editor-shadow {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            .option-hover {
+                @apply hover:bg-primary/10 transition-colors duration-200;
+            }
+
+            .code-line {
+                @apply relative py-0.5 px-1.5 my-0.5 rounded-md transition-all duration-300 pl-4;
+            }
+
+            .code-line:hover {
+                @apply bg-gray-100;
+            }
+
+            .blank-select {
+                @apply bg-primary/10 border-2 border-primary/30 rounded px-1.5 py-0.5 text-primary font-medium cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm;
+            }
+
+            .blank-select:hover {
+                @apply bg-primary/20;
+            }
+
+            .btn-submit {
+                @apply bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
+            }
+
+            .btn-reset {
+                @apply bg-gray-200 hover:bg-gray-300 text-dark font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400/50 focus:ring-offset-2;
+            }
+
+            .feedback-correct {
+                @apply text-green-500 font-medium;
+            }
+
+            .feedback-incorrect {
+                @apply text-red-500 font-medium;
+            }
+
+            .indent-1 {
+                @apply pl-6;
+            }
+
+            .indent-2 {
+                @apply pl-10;
+            }
+
+            .draggable-item {
+                @apply bg-white rounded-lg px-2 py-1 border border-gray-300 shadow-sm cursor-grab active:cursor-grabbing transition-all duration-200 hover:shadow-md whitespace-nowrap inline-block mb-1 mr-1 text-sm;
+            }
+
+            .answer-box {
+                @apply min-h-[60px] bg-neutral rounded-lg p-2 border-2 border-dashed border-gray-300 transition-all duration-300 flex flex-wrap items-start;
+            }
+
+            .answer-box-highlight {
+                @apply border-primary bg-blue-50;
+            }
+
+            .option-container {
+                @apply min-h-[60px] bg-white rounded-lg p-3 border border-gray-300 shadow-sm;
+            }
+
+            .code-preview {
+                @apply bg-dark text-white p-4 rounded-lg font-mono overflow-x-auto;
+            }
+
+            .scroll-x-auto {
+                overflow-x: auto;
+            }
+
+            .flex-nowrap {
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
 </head>
-<body>
-	<h1>个人网页</h1>
-	<a href="17 姚炫丞.html">17 姚炫丞</a><br>
-	<a href="32 毛吴越.html">32 毛吴越</a><br>
-	<a href="38 许齐婴.html">38 许齐婴</a><br>
-	<h1>班级网页</h1>
-	<a href="29 杜政霖.html">29 杜政霖</a><br>
-	<a href="18 许奕清.html">18 许奕清</a>
+<body class="font-inter bg-gray-50 text-dark min-h-screen">
+    <div class="px-4 sm:px-6 lg:px-8 py-6">
+        <!-- 第9题 -->
+        <main class="grid grid-cols-1 lg:grid-cols-1 gap-6 ultrawide:gap-8 mb-12"> <!-- 修改这里，添加mb-12类增加底部间距 -->
+            <!-- 左侧题目区域 -->
+            <div class="lg:col-span-12 bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
+                
+                
+                <!-- 题目和示例分两栏布局 -->
+                <div class="grid ggrid-cols-[1fr_1fr] md:grid-cols-[4fr_5fr] gap-4">
+                    <!-- 左侧题目内容 -->
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-question text-primary"></i>
+                            </div>
+                            <h2 class="text-xl font-semibold text-dark">第9题</h2>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-gray-700">在网页里添加bgm.mp3<span class="font-semibold text-primary">音乐</span>（音乐文件在music文件夹里），具体要求如下：</p>
+                            <ul class="list-disc pl-5 text-gray-700 space-y-0">
+                                <li>显示播放控件。</li>
+                                <li>至少使用autoplay、muted、loop中的一个属性，优化播放效果。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧示例内容 -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 h-fit">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center mr-2">
+                                <i class="fa-solid fa-lightbulb text-secondary text-sm"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-dark">基本格式</h3>
+                        </div> 
+                        <p class="text-gray-700">插入<span class="font-semibold text-primary">视频</span>：<span class="font-mono text-gray-800 mb-2">&lt;video src="文件路径" 播放控件 可选属性&gt;&lt;/video&gt;</span></p>
+                        <p class="text-gray-700">插入<span class="font-semibold text-primary">音频</span>：<span class="font-mono text-gray-800 mb-2">&lt;audio src="文件路径" 播放控件 可选属性&gt;&lt;/audio&gt;</span></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 ultrawide:gap-8">
+            <!-- 左侧可选模块区域 -->
+            <div class="lg:col-span-4 bg-white rounded-xl shadow-md p-4 transition-all duration-300 hover:shadow-lg">
+                <div class="flex items-center mb-3">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center mr-2">
+                            <i class="fa-solid fa-puzzle-piece text-secondary text-sm"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-dark">可选模块</h2>
+                    </div>
+                </div>
+                <div class="option-container pb-2">
+                    <div id="draggable-options">
+                        <div class="draggable-item" draggable="true" data-value="&lt;video">
+                            &lt;video
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="&lt;audio">
+                            &lt;audio
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="src=&quot;bgm.mp3&quot;">
+                            src="bgm.mp3"
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="src=&quot;music/bgm.mp3&quot;">
+                            src="music/bgm.mp3"
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="controls">
+                            controls
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="control">
+                            control
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="autoplay">
+                            autoplay
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="muted">
+                            muted
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="loop">
+                            loop
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="&gt;">
+                            &gt;
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="&lt;/video&gt;">
+                            &lt;/video&gt;
+                        </div>
+                        <div class="draggable-item" draggable="true" data-value="&lt;/audio&gt;">
+                            &lt;/audio&gt;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧答案框和预览效果区域 -->
+            <div class="lg:col-span-8 space-y-4">
+                <!-- 答案框区域 -->
+                <div class="bg-white rounded-xl shadow-md p-4 transition-all duration-300 hover:shadow-lg relative">
+                    <button id="reset-btn" class="absolute top-3 right-3 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition-colors flex items-center text-sm">
+                        <i class="fa-solid fa-refresh mr-1"></i>重置
+                    </button>
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-2">
+                            <i class="fa-solid fa-code text-primary text-sm"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-dark">答案框</h2>
+                    </div>
+                    <div class="answer-box min-h-[60px]" id="answer-box">
+                        <div class="text-gray-400 text-center w-full" id="answer-placeholder">
+                            从上方拖拽模块到此处
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 预览效果区域 -->
+                <div class="bg-white rounded-xl shadow-md p-4 transition-all duration-300 hover:shadow-lg">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center mr-2">
+                            <i class="fa-solid fa-eye text-secondary text-sm"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-dark">预览效果</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="code-preview" id="code-preview">
+                            <span class="text-gray-400">&lt;这里将显示你的代码&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 第10题 -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-8">
+            <!-- 题目区域 -->
+            <div class="lg:col-span-3 bg-white rounded-xl p-4 shadow-lg transition-all duration-300 hover:shadow-xl">
+                <h2 class="text-lg font-bold text-dark mb-4 flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                        <i class="fa-solid fa-question text-primary"></i>
+                    </div>
+                    <span>第10题</span>
+                </h2>
+
+                <div class="space-y-2 p-3 bg-neutral rounded-lg text-sm">
+                    <div class="code-line font-consolas">
+                        <span class="text-gray-700">&lt;</span>
+                        <select id="blank1" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="from">from</option>
+                            <option value="form">form</option>
+                            <option value="input">input</option>
+                            <option value="imput">imput</option>
+                        </select>
+                        <span class="text-gray-700"> action="</span>
+                        <select id="blank_action" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="jydj.html">jydj.html</option>
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                        </select>
+                        <span class="text-gray-700">" method="</span>
+                        <select id="blank_method" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="jydj.html">jydj.html</option>
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                        </select>
+                        <span class="text-gray-700">&gt;</span>
+                        <span class="ml-1 text-xs text-gray-500">🚩表单数据要发送到jydj.html页面，用POST方法提交</span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">&lt;</span>
+                        <select id="blank2" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="p">p</option>
+                            <option value="h2">h2</option>
+                        </select>
+                        <span class="text-gray-700">&gt;图书借阅登记表&lt;/</span>
+                        <select id="blank2_close" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="p">p</option>
+                            <option value="h2">h2</option>
+                        </select>
+                        <span class="text-gray-700">&gt;</span>
+                        <span class="ml-1 text-xs text-gray-500">🚩用h2为表单添加标题</span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">借阅的图书名称是：<span class="ml-1 text-xs text-gray-500">🚩文本框</span></span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">&lt;</span>
+                        <select id="blank3_1" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="from">from</option>
+                            <option value="form">form</option>
+                            <option value="input">input</option>
+                            <option value="imput">imput</option>
+                        </select>
+                        <span class="text-gray-700"> type="</span>
+                        <select id="blank3_1_type" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="radio">radio</option>
+                            <option value="text">text</option>
+                            <option value="submit">submit</option>
+                        </select>
+                        <span class="text-gray-700">" name="图书名称"&gt;</span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">你的年级是：<span class="ml-1 text-xs text-gray-500">🚩单选按钮</span></span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">&lt;</span>
+                        <select id="blank3_2" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="from">from</option>
+                            <option value="form">form</option>
+                            <option value="input">input</option>
+                            <option value="imput">imput</option>
+                        </select>
+                        <span class="text-gray-700"> type="</span>
+                        <select id="blank3_2_type" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="radio">radio</option>
+                            <option value="text">text</option>
+                            <option value="submit">submit</option>
+                        </select>
+                        <span class="text-gray-700">" name="</span>
+                        <select id="blank3_2_name" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="年级">年级</option>
+                            <option value="七年级">七年级</option>
+                            <option value="八年级">八年级</option>
+                            <option value="九年级">九年级</option>
+                        </select>
+                        <span class="text-gray-700">" value="</span>
+                        <select id="blank3_2_value" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="年级">年级</option>
+                            <option value="七年级">七年级</option>
+                            <option value="八年级">八年级</option>
+                            <option value="九年级">九年级</option>
+                        </select>
+                        <span class="text-gray-700">&gt;七年级</span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">&lt;</span>
+                        <select id="blank3_3" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="from">from</option>
+                            <option value="form">form</option>
+                            <option value="input">input</option>
+                            <option value="imput">imput</option>
+                        </select>
+                        <span class="text-gray-700"> type="</span>
+                        <select id="blank3_3_type" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="radio">radio</option>
+                            <option value="text">text</option>
+                            <option value="submit">submit</option>
+                        </select>
+                        <span class="text-gray-700">" name="</span>
+                        <select id="blank3_3_name" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="年级">年级</option>
+                            <option value="七年级">七年级</option>
+                            <option value="八年级">八年级</option>
+                            <option value="九年级">九年级</option>
+                        </select>
+                        <span class="text-gray-700">" value="</span>
+                        <select id="blank3_3_value" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="年级">年级</option>
+                            <option value="七年级">七年级</option>
+                            <option value="八年级">八年级</option>
+                            <option value="九年级">九年级</option>
+                        </select>
+                        <span class="text-gray-700">&gt;八年级</span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">&lt;</span>
+                        <select id="blank3_4" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="from">from</option>
+                            <option value="form">form</option>
+                            <option value="input">input</option>
+                            <option value="imput">imput</option>
+                        </select>
+                        <span class="text-gray-700"> type="</span>
+                        <select id="blank3_4_type" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="radio">radio</option>
+                            <option value="text">text</option>
+                            <option value="submit">submit</option>
+                        </select>
+                        <span class="text-gray-700">" name="</span>
+                        <select id="blank3_4_name" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="年级">年级</option>
+                            <option value="七年级">七年级</option>
+                            <option value="八年级">八年级</option>
+                            <option value="九年级">九年级</option>
+                        </select>
+                        <span class="text-gray-700">" value="</span>
+                        <select id="blank3_4_value" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="年级">年级</option>
+                            <option value="七年级">七年级</option>
+                            <option value="八年级">八年级</option>
+                            <option value="九年级">九年级</option>
+                        </select>
+                        <span class="text-gray-700">&gt;九年级</span>
+                    </div>
+                    
+                    <div class="code-line font-consolas indent-2">
+                        <span class="ml-1 text-xs text-gray-500">🚩提交按钮</span>
+                    </div>
+
+                    <div class="code-line font-consolas indent-2">
+                        <span class="text-gray-700">&lt;</span>
+                        <select id="blank3_5" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="form">form</option>
+                            <option value="from">from</option>
+                            <option value="input">input</option>
+                            <option value="imput">imput</option>
+                        </select>
+                        <span class="text-gray-700"> type="</span>
+                        <select id="blank3_5_type" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="radio">radio</option>
+                            <option value="text">text</option>
+                            <option value="submit">submit</option>
+                        </select>
+                        <span class="text-gray-700">" </span>
+                        <select id="blank4" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="name">name</option>
+                            <option value="value">value</option>
+                        </select>
+                        <span class="text-gray-700">="提交借阅申请"&gt;</span>
+                    </div>
+                    
+                    <div class="code-line font-consolas">
+                        <span class="text-gray-700">&lt;/</span>
+                        <select id="blank1_close" class="blank-select font-consolas">
+                            <option value=""></option>
+                            <option value="from">from</option>
+                            <option value="form">form</option>
+                            <option value="input">input</option>
+                            <option value="imput">imput</option>
+                        </select>
+                        <span class="text-gray-700">&gt;</span>
+                    </div>
+                </div>
+                
+                <div class="mt-4 flex justify-between">
+                    <button id="resetBtn" class="btn-reset text-sm">
+                        <i class="fa fa-refresh mr-1"></i>重置
+                    </button>
+                    <button id="submitBtn" class="btn-submit text-sm">
+                        <i class="fa fa-check mr-1"></i>提交答案
+                    </button>
+                </div>
+                
+                <div id="feedback" class="mt-3 p-2 rounded-lg hidden transition-all duration-300 text-sm"></div>
+            </div>
+            
+            <!-- 预览窗口 -->
+            <div class="lg:col-span-1 bg-white rounded-xl p-4 shadow-lg transition-all duration-180 hover:shadow-xl">
+                <h2 class="text-lg font-bold text-dark mb-4 flex items-center">
+                    <i class="fa fa-eye text-secondary mr-2"></i>预览窗口
+                </h2>
+                
+                <div id="preview-container" class="relative bg-neutral rounded-lg p-3 min-h-[300px] overflow-hidden">
+                    <div id="preview-content" class="bg-white p-4 rounded-lg shadow-sm min-h-[250px]">
+                        <!-- 预览内容将在这里动态生成 -->
+                        <div class="text-center text-gray-500 py-12">
+                            <i class="fa fa-code text-3xl mb-2"></i>
+                            <p>请完成上方的代码填空，然后点击"提交答案"按钮查看预览效果</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 加载动画 -->
+                    <div id="loading" class="absolute inset-0 bg-white/80 flex items-center justify-center hidden">
+                        <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 序号文本框和另存为按钮 -->
+        <div class="mt-8 flex items-center">
+            <label for="file-number" class="mr-2">文件序号:</label>
+            <input type="text" id="file-number" class="border border-gray-300 rounded px-2 py-1 mr-4">
+            <button id="save-btn" class="btn-submit text-sm">
+                <i class="fa fa-save mr-1"></i>另存为
+            </button>
+        </div>
+
+        <footer class="mt-8 text-center text-gray-500 text-xs">
+            <p>© 2025 HTML代码练习平台 | 设计与开发</p>
+        </footer>
+    </div>
+
+    <script>
+        // 第9题脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const draggableOptions = document.querySelectorAll('.draggable-item');
+            const answerBox = document.getElementById('answer-box');
+            const answerPlaceholder = document.getElementById('answer-placeholder');
+            const codePreview = document.getElementById('code-preview');
+            const resetBtn = document.getElementById('reset-btn');
+            
+            let draggedItem = null;
+            let originalOptions = [];
+            
+            // 保存原始选项
+            draggableOptions.forEach(item => {
+                originalOptions.push({
+                    value: item.getAttribute('data-value'),
+                    text: item.textContent
+                });
+            });
+            
+            // 为每个可拖拽元素添加事件监听器
+            draggableOptions.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // 为答案框添加事件监听器
+            answerBox.addEventListener('dragover', handleDragOver);
+            answerBox.addEventListener('dragenter', handleDragEnter);
+            answerBox.addEventListener('dragleave', handleDragLeave);
+            answerBox.addEventListener('drop', handleDrop);
+            
+            // 为重置按钮添加事件监听器
+            resetBtn.addEventListener('click', resetAnswerBox);
+            
+            // 拖拽开始
+            function handleDragStart(e) {
+                draggedItem = this;
+                e.dataTransfer.setData('text/plain', this.getAttribute('data-value'));
+                
+                // 添加拖拽样式
+                setTimeout(() => {
+                    this.classList.add('opacity-50', 'scale-95');
+                }, 0);
+            }
+            
+            // 拖拽结束
+            function handleDragEnd() {
+                // 移除拖拽样式
+                this.classList.remove('opacity-50', 'scale-95');
+                
+                // 如果拖出了答案框，则删除该元素
+                if (draggedItem && draggedItem.parentNode === answerBox) {
+                    draggedItem.remove();
+                    
+                    // 如果答案框为空，显示占位文本
+                    if (answerBox.children.length === 0) {
+                        answerBox.appendChild(answerPlaceholder);
+                    }
+                    
+                    // 更新预览
+                    updatePreview();
+                }
+                
+                draggedItem = null;
+            }
+            
+            // 答案框拖拽经过
+            function handleDragOver(e) {
+                e.preventDefault(); // 允许放置
+                this.classList.add('answer-box-highlight');
+            }
+            
+            // 答案框拖拽进入
+            function handleDragEnter(e) {
+                e.preventDefault();
+                this.classList.add('answer-box-highlight');
+            }
+            
+            // 答案框拖拽离开
+            function handleDragLeave() {
+                this.classList.remove('answer-box-highlight');
+            }
+            
+            // 答案框放置 - 改进的多行处理逻辑
+            function handleDrop(e) {
+                e.preventDefault();
+                this.classList.remove('answer-box-highlight');
+                
+                // 移除占位文本
+                if (answerPlaceholder && answerBox.contains(answerPlaceholder)) {
+                    answerPlaceholder.remove();
+                }
+                
+                // 获取拖拽的数据
+                const data = e.dataTransfer.getData('text/plain');
+                
+                // 创建新的拖拽项
+                const newItem = document.createElement('div');
+                newItem.className = 'draggable-item';
+                newItem.draggable = true;
+                newItem.setAttribute('data-value', data);
+                newItem.textContent = data;
+                
+                // 添加事件监听器
+                newItem.addEventListener('dragstart', handleDragStart);
+                newItem.addEventListener('dragend', handleDragEnd);
+                
+                // 获取鼠标位置和答案框尺寸
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const children = Array.from(this.children);
+                
+                // 如果答案框为空，直接添加
+                if (children.length === 0) {
+                    this.appendChild(newItem);
+                    updatePreview();
+                    return;
+                }
+                
+                // 查找最近的元素 - 考虑多行情况
+                let closestElement = null;
+                let closestOffset = Infinity;
+                
+                children.forEach(child => {
+                    const childRect = child.getBoundingClientRect();
+                    const childX = childRect.left - rect.left + childRect.width / 2;
+                    const childY = childRect.top - rect.top + childRect.height / 2;
+                    const offset = Math.sqrt(Math.pow(x - childX, 2) + Math.pow(y - childY, 2));
+                    
+                    if (offset < closestOffset) {
+                        closestOffset = offset;
+                        closestElement = child;
+                    }
+                });
+                
+                // 如果鼠标在元素附近，插入到该元素前
+                if (closestElement && closestOffset < 50) {
+                    // 计算鼠标在元素的左侧还是右侧
+                    const closestRect = closestElement.getBoundingClientRect();
+                    const closestCenterX = closestRect.left - rect.left + closestRect.width / 2;
+                    
+                    if (x < closestCenterX) {
+                        // 插入到元素前
+                        this.insertBefore(newItem, closestElement);
+                    } else {
+                        // 插入到元素后
+                        const nextSibling = closestElement.nextSibling;
+                        if (nextSibling) {
+                            this.insertBefore(newItem, nextSibling);
+                        } else {
+                            this.appendChild(newItem);
+                        }
+                    }
+                } else {
+                    // 如果离所有元素都远，检查是在上方还是下方
+                    const firstChild = children[0];
+                    const lastChild = children[children.length - 1];
+                    
+                    const firstRect = firstChild.getBoundingClientRect();
+                    const lastRect = lastChild.getBoundingClientRect();
+                    
+                    if (y < (firstRect.top - rect.top)) {
+                        // 在第一行上方，插入到开头
+                        this.insertBefore(newItem, firstChild);
+                    } else if (y > (lastRect.bottom - rect.top)) {
+                        // 在最后一行下方，插入到末尾
+                        this.appendChild(newItem);
+                    } else {
+                        // 在中间，但离元素远，可能是行末，插入到末尾
+                        this.appendChild(newItem);
+                    }
+                }
+                
+                // 更新预览
+                updatePreview();
+            }
+            
+            // 重置答案框
+            function resetAnswerBox() {
+                // 清空答案框
+                while (answerBox.firstChild) {
+                    answerBox.removeChild(answerBox.firstChild);
+                }
+                
+                // 添加占位文本
+                answerBox.appendChild(answerPlaceholder);
+                
+                // 更新预览
+                updatePreview();
+                
+                // 添加动画效果
+                answerBox.classList.add('animate-pulse');
+                setTimeout(() => {
+                    answerBox.classList.remove('animate-pulse');
+                }, 1000);
+                
+                // 重置按钮动画
+                resetBtn.classList.add('animate-spin');
+                setTimeout(() => {
+                    resetBtn.classList.remove('animate-spin');
+                }, 500);
+            }
+            
+            // 使答案框中的元素可排序
+            answerBox.addEventListener('click', function(e) {
+                if (e.target.classList.contains('draggable-item')) {
+                    makeSortable();
+                }
+            });
+            
+            function makeSortable() {
+                // 使用简单的排序实现
+                const sortableItems = answerBox.querySelectorAll('.draggable-item');
+                let dragged = null;
+                
+                sortableItems.forEach(item => {
+                    item.addEventListener('dragstart', function() {
+                        dragged = this;
+                        setTimeout(() => {
+                            this.classList.add('hidden');
+                        }, 0);
+                    });
+                    
+                    item.addEventListener('dragend', function() {
+                        dragged = null;
+                        sortableItems.forEach(item => {
+                            item.classList.remove('hidden', 'bg-blue-100');
+                        });
+                        updatePreview();
+                    });
+                    
+                    item.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                    });
+                    
+                    item.addEventListener('dragenter', function(e) {
+                        e.preventDefault();
+                        if (this !== dragged) {
+                            this.classList.add('bg-blue-100');
+                        }
+                    });
+                    
+                    item.addEventListener('dragleave', function() {
+                        this.classList.remove('bg-blue-100');
+                    });
+                    
+                    item.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('bg-blue-100');
+                        
+                        if (this !== dragged && answerBox.contains(dragged)) {
+                            if (getDragAfterElement(this, e.clientY)) {
+                                answerBox.insertBefore(dragged, getDragAfterElement(this, e.clientY));
+                            } else {
+                                answerBox.appendChild(dragged);
+                            }
+                        }
+                    });
+                });
+                
+                function getDragAfterElement(container, y) {
+                    const draggableElements = [...container.parentNode.querySelectorAll('.draggable-item:not(.hidden)')];
+                    
+                    return draggableElements.reduce((closest, child) => {
+                        const box = child.getBoundingClientRect();
+                        const offset = y - box.top - box.height / 2;
+                        
+                        if (offset < 0 && offset > closest.offset) {
+                            return { offset: offset, element: child };
+                        } else {
+                            return closest;
+                        }
+                    }, { offset: Number.NEGATIVE_INFINITY }).element;
+                }
+            }
+            
+            // 更新预览
+            function updatePreview() {
+                const items = answerBox.querySelectorAll('.draggable-item');
+                const code = Array.from(items).map(item => item.getAttribute('data-value')).join(' ');
+                
+                // 更新代码预览
+                codePreview.innerHTML = code || '<span class="text-gray-400">&lt;这里将显示你的代码&gt;</span>';
+            }
+            
+            // 添加动画效果
+            const animateElements = document.querySelectorAll('.bg-white.rounded-xl');
+            animateElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 80 * (index + 1));
+            });
+        });
+
+        // 第10题脚本
+        // 联动选择器 - form标签和结束标签联动
+        document.getElementById('blank1').addEventListener('change', function() {
+            document.getElementById('blank1_close').value = this.value;
+        });
+
+        document.getElementById('blank1_close').addEventListener('change', function() {
+            document.getElementById('blank1').value = this.value;
+        });
+        
+        // 联动选择器 - input标签联动
+        document.getElementById('blank3_1').addEventListener('change', function() {
+            document.getElementById('blank3_2').value = this.value;
+            document.getElementById('blank3_3').value = this.value;
+            document.getElementById('blank3_4').value = this.value;
+            document.getElementById('blank3_5').value = this.value;
+        });
+        
+        document.getElementById('blank3_2').addEventListener('change', function() {
+            document.getElementById('blank3_1').value = this.value;
+            document.getElementById('blank3_3').value = this.value;
+            document.getElementById('blank3_4').value = this.value;
+            document.getElementById('blank3_5').value = this.value;
+        });
+
+        document.getElementById('blank3_3').addEventListener('change', function() {
+            document.getElementById('blank3_1').value = this.value;
+            document.getElementById('blank3_2').value = this.value;
+            document.getElementById('blank3_4').value = this.value;
+            document.getElementById('blank3_5').value = this.value;
+        });
+
+        document.getElementById('blank3_4').addEventListener('change', function() {
+            document.getElementById('blank3_1').value = this.value;
+            document.getElementById('blank3_2').value = this.value;
+            document.getElementById('blank3_3').value = this.value;
+            document.getElementById('blank3_5').value = this.value;
+        });
+
+        document.getElementById('blank3_5').addEventListener('change', function() {
+            document.getElementById('blank3_1').value = this.value;
+            document.getElementById('blank3_2').value = this.value;
+            document.getElementById('blank3_3').value = this.value;
+            document.getElementById('blank3_4').value = this.value;
+        });
+
+        // 联动选择器 - radio类型
+        document.getElementById('blank3_2_type').addEventListener('change', function() {
+            document.getElementById('blank3_3_type').value = this.value;
+            document.getElementById('blank3_4_type').value = this.value;
+        });
+
+        document.getElementById('blank3_3_type').addEventListener('change', function() {
+            document.getElementById('blank3_2_type').value = this.value;
+            document.getElementById('blank3_4_type').value = this.value;
+        });
+        
+        document.getElementById('blank3_4_type').addEventListener('change', function() {
+            document.getElementById('blank3_2_type').value = this.value;
+            document.getElementById('blank3_3_type').value = this.value;
+        });
+
+        // h2标签联动
+        document.getElementById('blank2').addEventListener('change', function() {
+            document.getElementById('blank2_close').value = this.value;
+        });
+        
+        document.getElementById('blank2_close').addEventListener('change', function() {
+            document.getElementById('blank2').value = this.value;
+        });
+        
+        // 重置按钮
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                select.value = '';
+            });
+            
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('preview-content').innerHTML = `
+                <div class="text-center text-gray-500 py-12">
+                    <i class="fa fa-code text-3xl mb-2"></i>
+                    <p>请完成上方的代码填空，然后点击"提交答案"按钮查看预览效果</p>
+                </div>
+            `;
+        });
+        
+        // 提交按钮
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // 显示加载动画
+            document.getElementById('loading').classList.remove('hidden');
+            
+            // 模拟加载延迟
+            setTimeout(function() {
+                // 隐藏加载动画
+                document.getElementById('loading').classList.add('hidden');
+                
+                // 获取所有选择器的值
+                const blank1 = document.getElementById('blank1').value;
+                const blank_action = document.getElementById('blank_action').value;
+                const blank_method = document.getElementById('blank_method').value;
+                const blank2 = document.getElementById('blank2').value;
+                const blank3_1 = document.getElementById('blank3_1').value;
+                const blank3_1_type = document.getElementById('blank3_1_type').value;
+                const blank3_2 = document.getElementById('blank3_2').value;
+                const blank3_2_type = document.getElementById('blank3_2_type').value;
+                const blank3_2_name = document.getElementById('blank3_2_name').value;
+                const blank3_2_value = document.getElementById('blank3_2_value').value;
+                const blank3_3 = document.getElementById('blank3_3').value;
+                const blank3_3_type = document.getElementById('blank3_3_type').value;
+                const blank3_3_name = document.getElementById('blank3_3_name').value;
+                const blank3_3_value = document.getElementById('blank3_3_value').value;
+                const blank3_4 = document.getElementById('blank3_4').value;
+                const blank3_4_type = document.getElementById('blank3_4_type').value;
+                const blank3_4_name = document.getElementById('blank3_4_name').value;
+                const blank3_4_value = document.getElementById('blank3_4_value').value;
+                const blank3_5 = document.getElementById('blank3_5').value;
+                const blank3_5_type = document.getElementById('blank3_5_type').value;
+                const blank4 = document.getElementById('blank4').value;
+                
+                // 检查答案正确性
+                let correctCount = 0;
+                const totalCount = 21; // 总填空数
+                
+                // 验证每个空
+                if (blank1 === 'form') correctCount++;
+                if (blank_action === 'jydj.html') correctCount++;
+                if (blank_method === 'POST') correctCount++;
+                if (blank2 === 'h2') correctCount++;
+                if (blank3_1 === 'input') correctCount++;
+                if (blank3_1_type === 'text') correctCount++;
+                if (blank3_2 === 'input') correctCount++;
+                if (blank3_2_type === 'radio') correctCount++;
+                if (blank3_2_name === '年级') correctCount++;
+                if (blank3_2_value === '七年级') correctCount++;
+                if (blank3_3 === 'input') correctCount++;
+                if (blank3_3_type === 'radio') correctCount++;
+                if (blank3_3_name === '年级') correctCount++;
+                if (blank3_3_value === '八年级') correctCount++;
+                if (blank3_4 === 'input') correctCount++;
+                if (blank3_4_type === 'radio') correctCount++;
+                if (blank3_4_name === '年级') correctCount++;
+                if (blank3_4_value === '九年级') correctCount++;
+                if (blank3_5 === 'input') correctCount++;
+                if (blank3_5_type === 'submit') correctCount++;
+                if (blank4 === 'value') correctCount++;
+                
+                // 创建预览内容
+                const previewContent = document.createElement('div');
+                
+                try {
+                    // 创建表单元素
+                    const form = document.createElement(blank1 || 'div'); // 默认使用div
+                    form.action = blank_action || '';
+                    form.method = blank_method || '';
+                    form.className = 'space-y-3';
+                    
+                    // 添加标题
+                    const title = document.createElement(blank2 || 'div');
+                    title.textContent = '图书借阅登记表';
+                    title.className = 'text-lg font-bold mb-3';
+                    form.appendChild(title);
+                    
+                    // 添加图书名称输入
+                    const bookName = document.createElement(blank3_1 || 'div');
+                    bookName.type = blank3_1_type || '';
+                    bookName.name = '图书名称'; // 固定为"图书名称"
+                    bookName.placeholder = '请输入图书名称';
+                    bookName.className = 'w-full px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm';
+                    
+                    const bookNameContainer = document.createElement('div');
+                    bookNameContainer.className = 'mb-3';
+                    bookNameContainer.innerHTML = '<label class="block text-gray-700 mb-1.5 text-sm">借阅的图书名称是：</label>';
+                    bookNameContainer.appendChild(bookName);
+                    form.appendChild(bookNameContainer);
+                    
+                    // 添加年级选择
+                    const gradeContainer = document.createElement('div');
+                    gradeContainer.className = 'mb-3';
+                    gradeContainer.innerHTML = '<label class="block text-gray-700 mb-1.5 text-sm">你的年级是：</label>';
+                    
+                    // 七年级
+                    const grade7Container = document.createElement('div');
+                    grade7Container.className = 'flex items-center mb-1.5';
+                    const grade7 = document.createElement(blank3_2 || 'div');
+                    grade7.type = blank3_2_type || '';
+                    grade7.name = blank3_2_name || '';
+                    grade7.value = blank3_2_value || '';
+                    grade7.id = 'grade7';
+                    grade7.className = 'mr-1.5';
+                    const grade7Label = document.createElement('label');
+                    grade7Label.htmlFor = 'grade7';
+                    grade7Label.textContent = '七年级';
+                    grade7Label.className = 'text-sm';
+                    grade7Container.appendChild(grade7);
+                    grade7Container.appendChild(grade7Label);
+                    gradeContainer.appendChild(grade7Container);
+                    
+                    // 八年级
+                    const grade8Container = document.createElement('div');
+                    grade8Container.className = 'flex items-center mb-1.5';
+                    const grade8 = document.createElement(blank3_3 || 'div');
+                    grade8.type = blank3_3_type || '';
+                    grade8.name = blank3_3_name || '';
+                    grade8.value = blank3_3_value || '';
+                    grade8.id = 'grade8';
+                    grade8.className = 'mr-1.5';
+                    const grade8Label = document.createElement('label');
+                    grade8Label.htmlFor = 'grade8';
+                    grade8Label.textContent = '八年级';
+                    grade8Label.className = 'text-sm';
+                    grade8Container.appendChild(grade8);
+                    grade8Container.appendChild(grade8Label);
+                    gradeContainer.appendChild(grade8Container);
+                    
+                    // 九年级
+                    const grade9Container = document.createElement('div');
+                    grade9Container.className = 'flex items-center';
+                    const grade9 = document.createElement(blank3_4 || 'div');
+                    grade9.type = blank3_4_type || '';
+                    grade9.name = blank3_4_name || '';
+                    grade9.value = blank3_4_value || '';
+                    grade9.id = 'grade9';
+                    grade9.className = 'mr-1.5';
+                    const grade9Label = document.createElement('label');
+                    grade9Label.htmlFor = 'grade9';
+                    grade9Label.textContent = '九年级';
+                    grade9Label.className = 'text-sm';
+                    grade9Container.appendChild(grade9);
+                    grade9Container.appendChild(grade9Label);
+                    gradeContainer.appendChild(grade9Container);
+                    
+                    form.appendChild(gradeContainer);
+                    
+                    // 添加提交按钮
+                    const submitBtn = document.createElement(blank3_5 || 'div');
+                    submitBtn.type = blank3_5_type || '';
+                    submitBtn[blank4 || 'textContent'] = '提交借阅申请';
+                    submitBtn.className = 'w-full bg-primary hover:bg-primary/90 text-white font-medium py-1.5 px-3 rounded-lg transition-all duration-300 text-sm';
+                    form.appendChild(submitBtn);
+                    
+                    // 清空预览内容并添加表单
+                    previewContent.innerHTML = '';
+                    previewContent.appendChild(form);
+                    
+                    const isAllCorrect = correctCount === totalCount;
+                    
+                    // 显示反馈
+                    if (isAllCorrect) {
+                        document.getElementById('feedback').innerHTML = `
+                            <i class="fa fa-check-circle mr-1"></i>恭喜你，所有答案都正确！
+                        `;
+                        document.getElementById('feedback').className = 'mt-3 p-2 rounded-lg bg-green-100 text-green-700 text-sm';
+                        document.getElementById('feedback').classList.remove('hidden');
+                        
+                        // 添加成功动画
+                        document.getElementById('preview-content').classList.add('animate-bounce');
+                        setTimeout(() => {
+                            document.getElementById('preview-content').classList.remove('animate-bounce');
+                        }, 1000);
+                    } else {
+                        document.getElementById('feedback').innerHTML = `
+                            <i class="fa fa-times-circle mr-1"></i>答案有误，你答对了 ${correctCount} 个空，共 ${totalCount} 个空
+                        `;
+                        document.getElementById('feedback').className = 'mt-3 p-2 rounded-lg bg-red-100 text-red-700 text-sm';
+                        document.getElementById('feedback').classList.remove('hidden');
+                    }
+                } catch (error) {
+                    document.getElementById('feedback').innerHTML = `
+                        <i class="fa fa-exclamation-circle mr-1"></i>预览生成失败: ${error.message}
+                    `;
+                    document.getElementById('feedback').className = 'mt-3 p-2 rounded-lg bg-red-100 text-red-700 text-sm';
+                    document.getElementById('feedback').classList.remove('hidden');
+                    
+                    previewContent.innerHTML = `
+                        <div class="text-center text-red-500 py-12">
+                            <i class="fa fa-exclamation-triangle text-3xl mb-2"></i>
+                            <p>预览生成失败，请检查你的代码</p>
+                            <p class="text-xs mt-1.5">错误信息: ${error.message}</p>
+                        </div>
+                    `;
+                }
+                
+                // 更新预览内容
+                document.getElementById('preview-content').innerHTML = '';
+                document.getElementById('preview-content').appendChild(previewContent);
+                
+                // 添加淡入动画
+                document.getElementById('preview-content').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('preview-content').style.opacity = '1';
+                    document.getElementById('preview-content').style.transition = 'opacity 0.5s ease-in-out';
+                }, 100);
+                
+            }, 600); // 600ms的加载延迟
+        });
+
+        // 另存为功能
+        document.getElementById('save-btn').addEventListener('click', function() {
+            const fileNumber = document.getElementById('file-number').value;
+            const fileName = fileNumber ? `${fileNumber}.html` : 'answers.html';
+
+            // 获取第9题答案
+            const codePreview = document.getElementById('code-preview');
+            const ninthAnswer = codePreview.textContent;
+
+            // 获取第10题答案
+            const blank1 = document.getElementById('blank1').value;
+            const blank_action = document.getElementById('blank_action').value;
+            const blank_method = document.getElementById('blank_method').value;
+            const blank2 = document.getElementById('blank2').value;
+            const blank3_1 = document.getElementById('blank3_1').value;
+            const blank3_1_type = document.getElementById('blank3_1_type').value;
+            const blank3_2 = document.getElementById('blank3_2').value;
+            const blank3_2_type = document.getElementById('blank3_2_type').value;
+            const blank3_2_name = document.getElementById('blank3_2_name').value;
+            const blank3_2_value = document.getElementById('blank3_2_value').value;
+            const blank3_3 = document.getElementById('blank3_3').value;
+            const blank3_3_type = document.getElementById('blank3_3_type').value;
+            const blank3_3_name = document.getElementById('blank3_3_name').value;
+            const blank3_3_value = document.getElementById('blank3_3_value').value;
+            const blank3_4 = document.getElementById('blank3_4').value;
+            const blank3_4_type = document.getElementById('blank3_4_type').value;
+            const blank3_4_name = document.getElementById('blank3_4_name').value;
+            const blank3_4_value = document.getElementById('blank3_4_value').value;
+            const blank3_5 = document.getElementById('blank3_5').value;
+            const blank3_5_type = document.getElementById('blank3_5_type').value;
+            const blank4 = document.getElementById('blank4').value;
+
+            // 构建第10题的代码
+            let tenthAnswer = `<${blank1} action="${blank_action}" method="${blank_method}">\n`;
+            tenthAnswer += `\t<${blank2}>图书借阅登记表</${blank2}>\n`;
+            tenthAnswer += `\t借阅的图书名称是：\n`;
+            tenthAnswer += `\t<${blank3_1} type="${blank3_1_type}" name="图书名称">\n`;
+            tenthAnswer += `\t你的年级是：\n`;
+            tenthAnswer += `\t<${blank3_1} type="${blank3_2_type}" name="${blank3_2_name}" value="${blank3_2_value}">七年级\n`;
+            tenthAnswer += `\t<${blank3_1} type="${blank3_3_type}" name="${blank3_3_name}" value="${blank3_3_value}">八年级\n`;
+            tenthAnswer += `\t<${blank3_1} type="${blank3_4_type}" name="${blank3_4_name}" value="${blank3_4_value}">九年级\n`;
+            tenthAnswer += `\t<${blank3_1} type="${blank3_5_type}" ${blank4}="提交借阅申请">\n`;
+            tenthAnswer += `</${blank1}>`;
+
+            const content = `第9题答案:\n${ninthAnswer}\n\n第10题答案:\n${tenthAnswer}`;
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+    </script>
 </body>
 </html>
